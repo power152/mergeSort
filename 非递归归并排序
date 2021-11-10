@@ -1,0 +1,49 @@
+ public static void merge2(int[] array,int gap) {
+        int[] tmp = new int[array.length];
+        int k = 0;
+
+        int s1 = 0;
+        int e1 = s1+gap-1;
+        int s2 = e1+1;
+        int e2 = s2+gap-1 >= array.length ? array.length-1 : s2+gap-1;
+        //一定要有2个段 ，拿s2判断
+        while (s2 < array.length) {
+
+            while (s1 <= e1 && s2 <= e2) {
+                if (array[s1] <= array[s2]) {
+                    tmp[k++] = array[s1++];
+                }else {
+                    tmp[k++] = array[s2++];
+                }
+            }
+
+            while ( s1 <= e1 ) {
+                tmp[k++] = array[s1++];
+            }
+            while (s2 <= e2) {
+                tmp[k++] = array[s2++];
+            }
+
+            s1 = e2+1;
+            e1 = s1+gap-1;
+            s2 = e1+1;
+            e2 = s2+gap-1 >= array.length ? array.length-1 : s2+gap-1;
+
+        }
+
+        //只剩下最后段了，综合考虑会出现多重情况，归根结底取值范围就是len-1
+        while (s1 <= array.length-1) {
+            //s1 <= e1还要考虑的情况是   存在s1但是不存在e1情况下， s1 <= array.length-1
+            tmp[k++] = array[s1++];
+        }
+        for (int i = 0; i < k; i++) {
+            array[i] = tmp[i];
+        }
+    }
+
+ public static void mergeSort1(int[] array) {
+
+        for (int gap = 1; gap < array.length; gap*=2) {
+            merge2(array,gap);
+        }
+    }
