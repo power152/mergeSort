@@ -1,0 +1,48 @@
+//非递归归并
+public static void merge(int[] array,int left,int right,int mid) {
+        int[] tmp=new int[right=left+1];
+        int k=0;
+
+        int s1=left;
+        int e1=mid;
+
+        int s2=mid+1;
+        int e2=right;
+
+        while (s1<=e1 && s2<=e2) {
+            if(array[s1]<=array[s2]) {
+                tmp[k++]=array[s1++];
+            } else {
+                tmp[k++]=array[s2++];
+            }
+        }
+
+        while (s1<=e1) {
+            tmp[k++]=array[s1++];
+        }
+        while (s2<=e2) {
+            tmp[k++]=array[s2++];
+        }
+
+        for (int i = 0; i < k; i++) {
+            array[i+left]=tmp[i];
+        }
+    }
+
+    //待排序区间
+    public static void mergeSortInternal(int[] array,int left,int right) {
+        if(left>=right) {//终止条件
+            return;
+        }
+
+        int mid=(left+right)/2;
+        mergeSortInternal(array,left,mid);
+        mergeSortInternal(array,mid+1,right);
+        merge(array,left,right,mid);
+    }
+
+
+
+    public static void mergeSort(int[] array) {
+        mergeSortInternal(array,0,array.length-1);
+    }
