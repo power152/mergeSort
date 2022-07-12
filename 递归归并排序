@@ -1,6 +1,6 @@
 //递归归并
 public static void merge(int[] array,int left,int right,int mid) {
-        int[] tmp=new int[right=left+1];
+        int[] tmp=new int[right-left+1];
         int k=0;
 
         int s1=left;
